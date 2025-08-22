@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 #include <stdint.h>
 #include <stdio.h>
-#include "animations/liquid/liquid.h"
+#include "animations/bongocat/bongocat.h"
 
 enum {
     QWERTY = 0,
@@ -63,11 +63,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [ADJU] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, KC_MUTE,
+      RGB_TOG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,                    TG(COLEMAK), XXXXXXX, XXXXXXX, XXXXXXX, KC_MPLY, KC_MUTE,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MNXT, KC_VOLU,
+      RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MNXT, KC_VOLU,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, XXXXXXX,                  TG(COLEMAK), XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD,
+     RGB_RMOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MPRV, KC_VOLD,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
                                       //`--------------------------'  `--------------------------'
@@ -85,7 +85,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             break;
         case COLEMAK:
             current_base = COLEMAK;
-            rgb_matrix_sethsv(HSV_RED);
+            rgb_matrix_sethsv(HSV_CHARTREUSE);
             break;
         default:
             break;
@@ -96,7 +96,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 void keyboard_post_init_user(void) {
     rgb_matrix_sethsv(HSV_CYAN);
-    rgb_matrix_mode(RGB_MATRIX_BREATHING);
 }
 
 static const char CRKBD_LOGO[] = {
@@ -111,7 +110,8 @@ void oled_render_logo(void) {
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        oled_update_animation();
+        // oled_update_animation();
+        render_bongocat();
     }
     else {
         oled_render_logo();
@@ -124,7 +124,7 @@ oled_rotation_t rot = OLED_ROTATION_0;
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     if (!is_keyboard_master()) {
         rot = OLED_ROTATION_180;
-        oled_init_animation();
+        // oled_init_animation();
     }
     return rot;
 }

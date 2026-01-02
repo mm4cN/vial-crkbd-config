@@ -1,7 +1,6 @@
 #include QMK_KEYBOARD_H
 #include <stdint.h>
 #include <stdio.h>
-#include "animations/bongocat/bongocat.h"
 
 enum {
     QWERTY = 0,
@@ -41,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_TAB,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, KC_PGUP,
+      KC_LCTL, XXXXXXX, XXXXXXX, MS_BTN1, MS_BTN2, XXXXXXX,                      KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, XXXXXXX, KC_PGUP,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PGDN,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -109,11 +108,7 @@ void oled_render_logo(void) {
 }
 
 bool oled_task_user(void) {
-    if (is_keyboard_master()) {
-        // oled_update_animation();
-        render_bongocat();
-    }
-    else {
+    if (!is_keyboard_master()) {
         oled_render_logo();
         oled_scroll_left();
     }
@@ -123,8 +118,6 @@ bool oled_task_user(void) {
 oled_rotation_t rot = OLED_ROTATION_0;
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     if (!is_keyboard_master()) {
-        rot = OLED_ROTATION_180;
-        // oled_init_animation();
     }
     return rot;
 }

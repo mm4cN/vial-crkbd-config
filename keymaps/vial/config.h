@@ -55,6 +55,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_STARLIGHT_DUAL_SAT
 #define ENABLE_RGB_MATRIX_TYPING_HEATMAP
 
+#define MASTER_RIGHT
+#define SPLIT_POINTING_ENABLE
+#define POINTING_DEVICE_RIGHT
+#define POINTING_DEVICE_ROTATION_90
+
 #define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
 
 
